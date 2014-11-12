@@ -1,0 +1,42 @@
+<h3>{{ user.username }}</h3>
+<div class="row">
+    <ul>
+        <li>About the User: {{ user.about }}</li>
+    </ul>
+    <button data-ng-click="getProjects();">See Projects</button>
+    <div ng-hide="projectList">
+        <ul>
+            <li ng-repeat="project in projects">{{ project.title }}</li>
+        </ul>
+    </div>
+    <button data-ng-click="getFollowedProjects();">Followed Projects</button>
+    <!--<div ng-show="followedProjectList">-->
+    <div>
+        <div ng-repeat="followedProject in user.followed_project">
+            {{ followedProject }}
+            <button data-ng-click="detailProject(followedProject);"></button>
+        </div>
+    </div>
+    <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+    <button data-ng-click="deleteUser();">Delete User</button>
+    <br>
+    <button data-ng-click="updateUser();" ng-hide="editing">Update User Information</button>
+    <div ng-show="editing">
+        <span>Username:</span>
+        <input ng-model="username" type="text" placeholder="{{ user.username }}">
+        <br>
+        <span>First Name:</span>
+        <input ng-model="firstname" type="text" placeholder="{{ user.firstname }}">
+        <br>
+        <span>Last Name:</span>
+        <input ng-model="lastname" type="text" placeholder="{{ user.lastname }}">
+        <br>
+        <span>Email:</span>
+        <input ng-model="email" type="text" placeholder="{{ user.email }}">
+        <br>
+        <span>About:</span>
+        <textarea ng-model="about" placeholder="{{ user.about }}"></textarea>
+        <button ng-click="saveChanges();">Save Changes</button>
+    </div>
+</div>
+

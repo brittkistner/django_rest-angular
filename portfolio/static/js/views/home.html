@@ -1,0 +1,74 @@
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Project List</h2>
+        <!--Allow filtering of your project through text search.-->
+        <accordion>
+            <accordion-group heading="{{ project.title }}" ng-repeat="project in projects | filter: searchText">
+                <div>
+                    <a href="#/projects/{{ project.id }}">{{ project.title }}</a>
+                    <a href="#/users/{{ project.owner.id }}">{{ project.owner.username }}</a>
+                    <button data-ng-click="projectDescription();">See Description</button>
+                    <div ng-show="description">
+                        <div ng-switch="project">
+                            <div ng-if="project.description">
+                                <p>Project Description: {{ project.description }}</p>
+                            </div>
+                            <div ng-if="project.description == ''">
+                                <p>Project Description: No description available</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-switch="project">
+{#                        <!--{{ project.follower.indexOf(user.id) }}-->#}
+                        {{ user }}
+
+                        <div ng-if="project.follower.indexOf(project.owner.id)===-1">
+                            <button data-ng-click="follow(project.id);">Follow</button>
+                        </div>
+                        <div ng-if="project.follower.indexOf(project.owner.id)!=-1">
+                            <button data-ng-click="unfollow(project.id);">Unfollow</button>
+                        </div>
+                    </div>
+                </div>
+            </accordion-group>
+        </accordion>
+        <!--<pagination items-per-page="5" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged();"></pagination>-->
+    </div>
+    <div class="col-md-6">
+        <!-- Filter Inputs -->
+        <span>Search Projects</span>
+        <input type="text" placeholder="Search Text" ng-model="searchText">
+    </div>
+    <!--Create new user--->
+    <button data-ng-click="createUser();" ng-hide="newUser">Create User</button>
+    <div ng-show="newUser">
+        <span>Username:</span>
+        <input ng-model="username" type="text" placeholder="username">
+        <br>
+        <span>First Name:</span>
+        <input ng-model="firstname" type="text" placeholder="firstname">
+        <br>
+        <span>Last Name:</span>
+        <input ng-model="lastname" type="text" placeholder="lastname">
+        <br>
+        <span>Email:</span>
+        <input ng-model="email" type="text" placeholder="email">
+        <br>
+        <span>About:</span>
+        <textarea ng-model="about" placeholder="about"></textarea>
+        <button data-ng-click="saveUser();">Save User</button>
+    </div>
+    <!--Create new project-->
+    <button data-ng-click="createProject();" ng-hide="newProject">Create Project</button>
+    <div ng-show="newProject">
+        <span>Title:</span>
+        <input ng-model="title" type="text" placeholder="title">
+        <br>
+        <span>Description:</span>
+        <textarea ng-model="description" placeholder="description"></textarea>
+        <!--add followers-->
+        <button ng-click="saveProject();">Save Project</button>
+    </div>
+</div>
+
